@@ -59,7 +59,9 @@ class IndexGenerator {
 		}
 		$array = ['type' => $type, 'name' => null, 'columns' => $index->getColumns()];
 
-		if ( ! $this->ignoreIndexNames and ! $this->isDefaultIndexName($table, $index->getName(), $type, $index->getColumns())) {
+		if ($index->isPrimary()) {
+            $array['name'] = $table.'_pk';
+        } elseif ( ! $this->ignoreIndexNames and ! $this->isDefaultIndexName($table, $index->getName(), $type, $index->getColumns())) {
 			// Sent Index name to exclude spaces
 			$array['name'] = str_replace(' ', '', $index->getName());
 		}
