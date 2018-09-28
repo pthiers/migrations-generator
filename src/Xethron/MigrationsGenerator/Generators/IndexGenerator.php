@@ -78,9 +78,9 @@ class IndexGenerator {
 			return 'PRIMARY';
 		}
 		if ( is_array( $columns ) ) {
-			$columns = implode( '_', $columns );
+			$columns = implode( '', ucwords($columns) );
 		}
-		return $table .'_'. $columns .'_'. $type;
+		return $table . $columns . $type;
 	}
 
 	/**
