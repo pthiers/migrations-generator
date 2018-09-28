@@ -99,6 +99,9 @@ class FieldGenerator {
 			$comment = $column->getComment();
 			$decorators = null;
 			$args = null;
+			$indexType = null;
+			if($index != null)
+				$indexType = $index->type;
 
 			if (isset($this->fieldTypeMap[$type])) {
 				$type = $this->fieldTypeMap[$type];
@@ -107,7 +110,7 @@ class FieldGenerator {
 			// Different rules for different type groups
 			if (in_array($type, ['tinyInteger', 'smallInteger', 'integer', 'bigInteger'])) {
 				// Integer
-				if ($type == 'integer' and $index->type == 'primary' and $column->getAutoincrement()) {
+				if ($type == 'integer' and $indexType == 'primary' and $column->getAutoincrement()) {
 					$type = 'increments';
 					$index = null;
 				} else {
