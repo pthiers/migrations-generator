@@ -107,11 +107,11 @@ class FieldGenerator {
 			// Different rules for different type groups
 			if (in_array($type, ['tinyInteger', 'smallInteger', 'integer', 'bigInteger'])) {
 				// Integer
-				if ($type == 'integer' and $column->getUnsigned() and $column->getAutoincrement()) {
+				if ($type == 'integer' and $index->type == 'primary' and $column->getAutoincrement()) {
 					$type = 'increments';
 					$index = null;
 				} else {
-					if ($column->getUnsigned()) {
+					if ($column->getUnsigned() || preg_match('/^(id)[A-Z]/',$name)) {
 						$decorators[] = 'unsigned';
 					}
 					if ($column->getAutoincrement()) {
